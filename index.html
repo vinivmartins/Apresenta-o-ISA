@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#123b42">
+  <title>Radar Administrativo ISA — demonstração</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand"><span class="brand-mark">ISA</span><span><strong>Radar administrativo</strong><small>Demonstração de processo</small></span></div>
+      <nav aria-label="Navegação principal">
+        <button class="nav-item active" data-view="overview" aria-current="page"><span class="nav-icon">▦</span>Visão do dia</button>
+        <button class="nav-item" data-view="invoices"><span class="nav-icon">▤</span>Notas fiscais</button>
+        <button class="nav-item" data-view="pending"><span class="nav-icon">◷</span>Pendências</button>
+        <button class="nav-item" data-view="guide"><span class="nav-icon">≡</span>Como funciona</button>
+      </nav>
+      <div class="sidebar-bottom"><span class="demo-dot"></span> Ambiente demonstrativo<br><small>Dados inteiramente fictícios</small></div>
+    </aside>
+    <main class="main">
+      <header class="topbar"><span>ISA / Administrativo</span><span class="topbar-right"><button class="tour-launch" id="start-tour" type="button">Tour guiado</button><span class="topbar-label">Protótipo local</span> <span class="avatar">AD</span></span></header>
+      <div class="content">
+        <section class="view active" id="overview">
+          <div class="page-heading"><div><h1>Visão do dia</h1><p>O que precisa de conferência e acompanhamento.</p></div><span class="today" id="today"></span></div>
+          <div class="summary">
+            <div class="summary-item"><span>Notas registradas</span><strong id="stat-review">0</strong><small>Com conferência documentada</small></div>
+            <div class="summary-item"><span>Pendências em aberto</span><strong id="stat-open">0</strong><small>Com próxima ação definida</small></div>
+            <div class="summary-item"><span>Com prazo próximo</span><strong id="stat-due">0</strong><small>Até os próximos 3 dias</small></div>
+          </div>
+          <div class="process-strip" id="process-strip" aria-label="Fluxo da automação"><span>Entrada</span><span>Leitura</span><span>Validação</span><span>Conferência humana</span><span>Registro ou pendência</span></div>
+          <div class="overview-grid">
+            <div class="panel"><div class="panel-head"><div><h2>Próximas ações</h2><p>Prioridade para o administrativo</p></div><button class="text-btn" data-go="pending">Ver todas <span aria-hidden="true">→</span></button></div><div id="overview-actions"></div></div>
+            <div class="panel start-panel"><div class="start-icon" aria-hidden="true">▤</div><h2>Uma nota, um fluxo claro</h2><p>Use um XML fictício para mostrar como a leitura vira uma conferência rastreável.</p><ol><li>Selecione um XML ou use o exemplo</li><li>Revise e corrija os campos</li><li>Registre a nota e a pendência</li></ol><button class="primary" data-go="invoices">Iniciar conferência <span aria-hidden="true">→</span></button></div>
+          </div>
+        </section>
+        <section class="view" id="invoices">
+          <div class="page-heading"><div><h1>Conferência de notas</h1><p>Entrada assistida, validação humana e registro.</p></div><span class="section-tag">Etapa demonstrativa</span></div>
+          <div class="workflow"><span class="step current">1 &nbsp; Ler documento</span><span class="step">2 &nbsp; Conferir campos</span><span class="step">3 &nbsp; Registrar ação</span></div>
+          <div class="invoice-layout">
+            <div class="panel">
+              <div class="panel-head"><div><h2>Documento recebido</h2><p>Selecione um XML de NF-e ou NFS-e padrão nacional.</p></div></div>
+              <div class="xml-upload" id="xml-upload"><label class="field-label" for="xml-file">Arquivo XML</label><input id="xml-file" type="file" accept=".xml,application/xml,text/xml"><p class="field-note">A leitura acontece neste navegador. Use apenas os exemplos fictícios nesta demonstração.</p></div>
+              <div class="button-row"><button class="secondary" id="load-xml-sample" type="button">Usar XML fictício</button><button class="secondary" id="load-xml-conflict" type="button">Testar XML divergente</button></div>
+              <p class="xml-feedback" id="xml-feedback" role="status" aria-live="polite">Nenhum XML carregado.</p>
+              <details class="xml-source" id="xml-source-details" hidden><summary>Ver XML de origem</summary><pre id="xml-preview"></pre></details>
+              <details class="text-fallback" id="text-fallback"><summary>Entrada alternativa: colar texto</summary><label class="field-label" for="invoice-text">Conteúdo do documento</label><textarea id="invoice-text" rows="8" placeholder="Cole aqui apenas texto fictício para testar a leitura alternativa."></textarea><div class="button-row"><button class="secondary" id="load-sample" type="button">Carregar texto fictício</button><button class="secondary" id="load-conflict" type="button">Testar texto divergente</button><button class="primary" id="analyze" type="button">Analisar texto <span aria-hidden="true">→</span></button></div></details>
+              <p class="field-note">Leitura e verificações locais. Não verifica assinatura digital, autorização fiscal ou CNPJ na Receita. Não envie dados reais a este protótipo.</p>
+            </div>
+            <div class="panel review-panel">
+              <div class="panel-head"><div><h2>Dados para conferir</h2><p>As sugestões só entram no controle após sua confirmação.</p></div><span class="status status-neutral" id="analysis-status">Aguardando leitura</span></div>
+              <form id="invoice-form">
+                <div class="form-grid">
+                  <label>Fornecedor<input id="supplier" name="supplier" required autocomplete="off" placeholder="Nome do fornecedor"></label>
+                  <label>CNPJ<input id="cnpj" name="cnpj" required autocomplete="off" placeholder="00.000.000/0000-00"></label>
+                  <label>Número da nota<input id="number" name="number" required autocomplete="off" placeholder="Ex.: 1048"></label>
+                  <label>Data de emissão<input id="issued" name="issued" type="date" required></label>
+                  <label>Valor total (R$)<input id="amount" name="amount" required inputmode="decimal" placeholder="Ex.: 1.245,90"></label>
+                  <label>Vencimento<input id="due" name="due" type="date"></label>
+                  <label>Responsável pela conferência<input id="responsible" name="responsible" required autocomplete="off" value="Administrativo" placeholder="Nome ou equipe"></label>
+                </div>
+                <div class="validation-box" id="validation-box" hidden><div class="validation-head"><h3>Verificações automáticas</h3><span id="validation-summary"></span></div><ul id="validation-list"></ul></div>
+                <div id="invoice-alert" class="inline-alert" role="status" hidden></div>
+                <label class="checkbox" id="cnpj-correction-row" hidden><input type="checkbox" id="cnpj-correction"><span>Confirmei a correção do CNPJ com o documento original</span></label>
+                <label class="checkbox"><input type="checkbox" id="confirmed" required><span>Conferi os dados com o documento de origem</span></label>
+                <div class="button-row end"><button class="primary" type="submit">Registrar nota conferida</button></div>
+              </form>
+            </div>
+          </div>
+          <div class="panel list-panel"><div class="panel-head"><div><h2>Notas registradas</h2><p>Exemplos e registros desta demonstração.</p></div><button class="text-btn" id="export-csv">Exportar CSV ↓</button></div><div class="table-wrap"><table><thead><tr><th>Fornecedor</th><th>Nota</th><th>Emissão</th><th>Valor</th><th>Responsável</th><th>Situação</th></tr></thead><tbody id="invoice-rows"></tbody></table></div></div>
+          <div class="panel history-panel"><div class="panel-head"><div><h2>Histórico de decisões</h2><p>Registro das conferências, exceções e encaminhamentos da demonstração.</p></div></div><div id="history-list"></div></div>
+        </section>
+        <section class="view" id="pending">
+          <div class="page-heading"><div><h1>Pendências</h1><p>Uma próxima ação, um responsável e um prazo para cada item.</p></div><span class="section-tag">Controle operacional</span></div>
+          <div class="panel"><div class="panel-head"><div><h2>Fila de acompanhamento</h2><p>Itens fictícios para demonstrar a rotina.</p></div><select id="pending-filter" aria-label="Filtrar pendências"><option value="open">Em aberto</option><option value="all">Todas</option><option value="done">Concluídas</option></select></div><div id="pending-list"></div></div>
+          <div class="panel new-pending"><div class="panel-head"><div><h2>Adicionar pendência</h2><p>Registre uma exceção encontrada na conferência.</p></div></div><form id="pending-form" class="pending-form"><label>Assunto<input id="pending-title" required placeholder="Ex.: confirmar valor com fornecedor"></label><label>Responsável<input id="pending-owner" required placeholder="Ex.: Administrativo"></label><label>Prazo<input id="pending-date" type="date" required></label><button class="primary" type="submit">Adicionar</button></form></div>
+        </section>
+        <section class="view" id="guide">
+          <div class="page-heading"><div><h1>Como funciona</h1><p>Processo documentado para qualquer pessoa conseguir repetir.</p></div></div>
+          <div class="guide-grid">
+            <div class="panel"><h2>Procedimento de conferência</h2><div class="guide-step"><span>01</span><div><h3>Receber e identificar</h3><p>Selecione o XML recebido e confira o fornecedor com o documento de origem. Nesta demonstração, use apenas os exemplos fictícios.</p></div></div><div class="guide-step"><span>02</span><div><h3>Ler e validar</h3><p>O XML preenche os campos. O sistema verifica dados obrigatórios, possível duplicidade e divergências entre nome e CNPJ. Compare tudo com o documento.</p></div></div><div class="guide-step"><span>03</span><div><h3>Encaminhar exceções</h3><p>Um conflito bloqueia o registro e abre uma pendência para o responsável. Corrija o dado somente após confirmar a origem; não ignore o alerta.</p></div></div><div class="guide-step"><span>04</span><div><h3>Registrar e acompanhar</h3><p>Confirme a conferência, salve a nota e verifique a fila e o histórico. Vencimento ausente gera acompanhamento com responsável e prazo.</p></div></div></div>
+            <div class="panel guide-aside"><h2>O que o protótipo prova</h2><ul class="check-list"><li>Leitura assistida e padronização de campos</li><li>Conferência de identidade do fornecedor</li><li>Bloqueio de duplicidade e CNPJ divergente</li><li>Pendência automática com responsável e prazo</li><li>Histórico de decisões e exportação para planilha</li></ul><div class="guide-divider"></div><h3>Para um piloto real</h3><p>Validar o fluxo com a equipe, escolher a ferramenta de leitura de documentos aprovada pela clínica e medir tempo e erros antes e depois. Os sistemas internos e a rotina efetiva do ISA ainda não foram avaliados.</p><button class="secondary" id="reset-demo">Restaurar dados fictícios</button></div>
+          </div>
+        </section>
+      </div>
+      <div id="toast" role="status" aria-live="polite"></div>
+    </main>
+  </div>
+  <div class="tour-layer" id="tour-layer" hidden>
+    <div class="tour-shield"></div>
+    <div class="tour-spotlight" aria-hidden="true"></div>
+    <section class="tour-card" role="dialog" aria-modal="true" aria-labelledby="tour-title" aria-describedby="tour-description">
+      <div class="tour-progress"><span id="tour-count"></span><button id="tour-skip" class="tour-skip" type="button">Pular tour</button></div>
+      <h2 id="tour-title"></h2>
+      <p id="tour-description"></p>
+      <div class="tour-controls"><button id="tour-back" class="secondary" type="button">Voltar</button><button id="tour-next" class="primary" type="button">Próximo</button></div>
+    </section>
+  </div>
+  <script src="xml-reader.js"></script>
+  <script src="app.js"></script>
+  <script src="tour.js"></script>
+</body>
+</html>
+
+
+

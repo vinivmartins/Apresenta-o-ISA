@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- DOCUMENTO FICTÍCIO PARA DEMONSTRAÇÃO. SEM VALIDADE FISCAL. -->
+<NFe xmlns="http://www.portalfiscal.inf.br/nfe">
+  <infNFe versao="4.00">
+    <ide><nNF>2482</nNF><dhEmi>2026-09-30T10:00:00-03:00</dhEmi></ide>
+    <emit><CNPJ>00111222000133</CNPJ><xNome>Suprimentos Cerrado Ltda</xNome></emit>
+    <total><ICMSTot><vNF>1245.90</vNF></ICMSTot></total>
+  </infNFe>
+</NFe>
