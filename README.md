@@ -4,7 +4,7 @@ Protótipo local para apresentar uma proposta de organização da conferência d
 
 ## Abrir
 
-Abra `index.html` em um navegador moderno. Na primeira abertura, o **Tour guiado** aparece automaticamente; o botão no topo permite repeti-lo. Não há instalação, conta, servidor nem conexão com serviços externos. Os registros criados ficam apenas no armazenamento local do navegador. Use **Como funciona → Restaurar dados fictícios** para voltar ao estado inicial.
+Acesse https://apresentacao-isa.vercel.app/ ou abra `index.html` em um navegador moderno. Código-fonte: https://github.com/vinivmartins/Apresenta-o-ISA. Na primeira abertura, o **Tour guiado** aparece automaticamente; o botão no topo permite repeti-lo. Não há instalação nem conta para usar a demonstração. A leitura acontece no navegador; os registros criados ficam apenas no armazenamento local daquele navegador. Use **Como funciona → Restaurar dados fictícios** para voltar ao estado inicial.
 
 ## Demonstração em 3 minutos
 

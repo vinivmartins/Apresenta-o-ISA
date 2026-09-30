@@ -11,11 +11,11 @@
 
 ## O que enviar ao responsável pela vaga
 
-Envie a pasta compactada `radar-administrativo-isa.zip` e uma mensagem curta. Se anexos ZIP ou HTML forem bloqueados, ofereça uma demonstração presencial pelo seu computador ou um vídeo curto mostrando o fluxo. Não apresente o protótipo como sistema implantado no ISA.
+Envie o endereço https://apresentacao-isa.vercel.app/ e uma mensagem curta. O código também está em https://github.com/vinivmartins/Apresenta-o-ISA. Se preferir uma demonstração sem internet, use a pasta compactada `radar-administrativo-isa.zip` e abra `index.html`. Não apresente o protótipo como sistema implantado no ISA.
 
 ### Modelo de mensagem
 
-> Olá! Preparei uma demonstração de uma rotina administrativa inspirada na vaga: entrada de nota fiscal por XML, verificação de duplicidade e CNPJ, atribuição de responsável e acompanhamento de pendências. O arquivo abre diretamente no navegador e usa apenas dados fictícios. Há um tour guiado e um roteiro na pasta. Gostaria de mostrar em alguns minutos como eu validaria esse processo com a equipe antes de propor um piloto real.
+> Olá! Preparei uma demonstração de uma rotina administrativa inspirada na vaga: entrada de nota fiscal por XML, verificação de duplicidade e CNPJ, atribuição de responsável e acompanhamento de pendências. Ela usa apenas dados fictícios e tem um tour guiado: https://apresentacao-isa.vercel.app/. Gostaria de mostrar em alguns minutos como eu validaria esse processo com a equipe antes de propor um piloto real.
 
 Adapte a mensagem à sua voz. A resposta obrigatória da candidatura sobre uma automação que **você já realizou** deve relatar sua experiência verdadeira; este protótipo é um complemento.
 
